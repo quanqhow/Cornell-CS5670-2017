@@ -4,10 +4,11 @@ from itertools import izip
 import cv2
 import time
 from scipy.sparse import csr_matrix
-from student import compute_photometric_stereo_impl, pyrup_impl, \
-    pyrdown_impl, project_impl, unproject_corners_impl, \
+from student import compute_photometric_stereo_impl, \
+    project_impl, \
     preprocess_ncc_impl, compute_ncc_impl
 
+from util_sweep import pyrup_impl, pyrdown_impl, unproject_corners_impl
 
 def rerendering_error(lights, images, albedo, normals):
     errors = []
@@ -202,3 +203,5 @@ def save_mesh(K, width, height, albedo, normals, depth, alpha, filename):
         f.write('\n'.join(vertices))
         f.write('\n')
         f.write('\n'.join(faces))
+
+
