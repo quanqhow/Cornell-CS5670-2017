@@ -148,21 +148,21 @@ def feature_inversion_gradient(net, data, blob_name, target_feat, regularization
     :param regularization: weight (lambda) applied to the regularizer.
     """
     grad = np.zeros_like(data) # placeholder
-    ############################ TODO 7a BEGIN #################################
+    ############################ TODO 7a BEGIN (EXTRA CREDITS) #################################
     raise NotImplementedError("TODO 7a")
-    ############################ TODO 7a END #################################
+    ############################ TODO 7a END (EXTRA CREDITS)#################################
     assert grad.shape == (3, 227, 227) # expected shape
     return grad
 
 
-# Answer TODO 7b as a comment here:
+# Answer TODO 7b as a comment here (EXTRA CREDITS):
 ############################ TODO 7b BEGIN #################################
 #
-# (a)
+# (a) (EXTRA CREDITS)
 #
 #
 #
-# (b)
+# (b) (EXTRA CREDITS)
 #
 #
 #
