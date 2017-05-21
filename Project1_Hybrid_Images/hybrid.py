@@ -1,7 +1,7 @@
 import sys
 import cv2
 import numpy as np
-from src.crosscorrelation import handle_edge
+from src.filter_util import handle_edge
 sys.path.append('/Users/kb/bin/opencv-3.1.0/build/lib/')
 
 
@@ -30,7 +30,8 @@ def cross_correlation_2d(img, kernel):
 
 
 def convolve_2d(img, kernel):
-    '''Use cross_correlation_2d() to carry out a 2D convolution.
+    """
+    Use cross_correlation_2d() to carry out a 2D convolution.
 
     Inputs:
         img:    Either an RGB image (height x width x 3) or a grayscale image
@@ -41,13 +42,15 @@ def convolve_2d(img, kernel):
     Output:
         Return an image of the same dimensions as the input image (same width,
         height and the number of color channels)
-    '''
+    """
     # TODO-BLOCK-BEGIN
     raise Exception("TODO in hybrid.py not implemented")
     # TODO-BLOCK-END
 
+
 def gaussian_blur_kernel_2d(sigma, width, height):
-    '''Return a Gaussian blur kernel of the given dimensions and with the given
+    """
+    Return a Gaussian blur kernel of the given dimensions and with the given
     sigma. Note that width and height are different.
 
     Input:
@@ -60,41 +63,48 @@ def gaussian_blur_kernel_2d(sigma, width, height):
     Output:
         Return a kernel of dimensions width x height such that convolving it
         with an image results in a Gaussian-blurred image.
-    '''
+    """
     # TODO-BLOCK-BEGIN
     raise Exception("TODO in hybrid.py not implemented")
     # TODO-BLOCK-END
 
+
 def low_pass(img, sigma, size):
-    '''Filter the image as if its filtered with a low pass filter of the given
+    """
+    Filter the image as if its filtered with a low pass filter of the given
     sigma and a square kernel of the given size. A low pass filter supresses
     the higher frequency components (finer details) of the image.
 
     Output:
         Return an image of the same dimensions as the input image (same width,
         height and the number of color channels)
-    '''
+    """
     # TODO-BLOCK-BEGIN
     raise Exception("TODO in hybrid.py not implemented")
     # TODO-BLOCK-END
 
+
 def high_pass(img, sigma, size):
-    '''Filter the image as if its filtered with a high pass filter of the given
+    """
+    Filter the image as if its filtered with a high pass filter of the given
     sigma and a square kernel of the given size. A high pass filter suppresses
     the lower frequency components (coarse details) of the image.
 
     Output:
         Return an image of the same dimensions as the input image (same width,
         height and the number of color channels)
-    '''
+    """
     # TODO-BLOCK-BEGIN
     raise Exception("TODO in hybrid.py not implemented")
     # TODO-BLOCK-END
 
+
 def create_hybrid_image(img1, img2, sigma1, size1, high_low1, sigma2, size2,
         high_low2, mixin_ratio):
-    '''This function adds two images to create a hybrid image, based on
-    parameters specified by the user.'''
+    """
+    This function adds two images to create a hybrid image, based on
+    parameters specified by the user.
+    """
     high_low1 = high_low1.lower()
     high_low2 = high_low2.lower()
 
