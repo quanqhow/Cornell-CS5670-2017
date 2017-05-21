@@ -1,11 +1,13 @@
 import sys
-sys.path.append('/Users/kb/bin/opencv-3.1.0/build/lib/')
-
 import cv2
 import numpy as np
+from src.crosscorrelation import handle_edge
+sys.path.append('/Users/kb/bin/opencv-3.1.0/build/lib/')
+
 
 def cross_correlation_2d(img, kernel):
-    '''Given a kernel of arbitrary m x n dimensions, with both m and n being
+    """
+    Given a kernel of arbitrary m x n dimensions, with both m and n being
     odd, compute the cross correlation of the given image with the given
     kernel, such that the output is of the same dimensions as the image and that
     you assume the pixels out of the bounds of the image to be zero. Note that
@@ -21,10 +23,11 @@ def cross_correlation_2d(img, kernel):
     Output:
         Return an image of the same dimensions as the input image (same width,
         height and the number of color channels)
-    '''
-    # TODO-BLOCK-BEGIN
-    raise Exception("TODO in hybrid.py not implemented")
-    # TODO-BLOCK-END
+    """
+    
+    img_out = handle_edge(img, img.shape)
+    return img_out
+
 
 def convolve_2d(img, kernel):
     '''Use cross_correlation_2d() to carry out a 2D convolution.
