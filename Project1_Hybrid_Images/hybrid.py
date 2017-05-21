@@ -1,7 +1,7 @@
 import sys
 import cv2
 import numpy as np
-from src.filter_util import handle_edge
+from src.filter_util import handle_edge, canvas
 sys.path.append('/Users/kb/bin/opencv-3.1.0/build/lib/')
 
 
@@ -24,8 +24,9 @@ def cross_correlation_2d(img, kernel):
         Return an image of the same dimensions as the input image (same width,
         height and the number of color channels)
     """
+    cc_canvas = canvas(img.shape, kernel.shape)
 
-    img_out = handle_edge(img, img.shape)
+    img_out = handle_edge(cc_canvas, img.shape)
     return img_out
 
 

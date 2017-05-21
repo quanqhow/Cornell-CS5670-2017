@@ -1,6 +1,16 @@
 import numpy as np
 
 
+def canvas(img_size, kernel_size):
+    img_width = img_size[1]
+    img_height = img_size[0]
+    kernel_width = kernel_size[1]
+    kernel_height = kernel_size[0]
+    output_width = img_width - (kernel_width - 1)
+    output_height = img_height - (kernel_height - 1)
+    return np.zeros((output_height, output_width))
+
+
 def handle_edge(img, output_size, type='extend'):
     if img.shape == output_size:
         return img
