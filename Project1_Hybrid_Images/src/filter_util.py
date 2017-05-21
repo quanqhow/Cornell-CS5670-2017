@@ -31,3 +31,4 @@ def handle_edge(img, output_size, type='extend'):
     right = np.repeat(img[:, -1:], n_extension_columns / 2, axis=1)
     img = np.c_[img, right]
     return img
+

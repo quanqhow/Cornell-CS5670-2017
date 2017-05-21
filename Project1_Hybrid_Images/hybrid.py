@@ -1,7 +1,8 @@
 import sys
 import cv2
+import math
 import numpy as np
-from src.filter_util import handle_edge, canvas
+from src import filter_util
 sys.path.append('/Users/kb/bin/opencv-3.1.0/build/lib/')
 
 
@@ -24,9 +25,15 @@ def cross_correlation_2d(img, kernel):
         Return an image of the same dimensions as the input image (same width,
         height and the number of color channels)
     """
-    cc_canvas = canvas(img.shape, kernel.shape)
-
-    img_out = handle_edge(cc_canvas, img.shape)
+    cc_canvas = filter_util.canvas(img.shape, kernel.shape)
+    kernel_size = kernel.shape
+    for target_column_idx in range(cc_canvas.shape[1]):
+        for target_row_idx in range(cc_canvas.shape[0]):
+            source_sample = img[
+                target_row_idx:target_row_idx + kernel_size[0],
+                target_column_idx:target_column_idx + kernel_size[1]]
+            cc_canvas[target_row_idx, target_column_idx] = np.sum(source_sample * kernel)
+    img_out = filter_util.handle_edge(cc_canvas, img.shape)
     return img_out
 
 
@@ -44,9 +51,8 @@ def convolve_2d(img, kernel):
         Return an image of the same dimensions as the input image (same width,
         height and the number of color channels)
     """
-    # TODO-BLOCK-BEGIN
-    raise Exception("TODO in hybrid.py not implemented")
-    # TODO-BLOCK-END
+    convolution_kernel = kernel[::-1, ::-1]
+    return cross_correlation_2d(img, convolution_kernel)
 
 
 def gaussian_blur_kernel_2d(sigma, width, height):
@@ -65,9 +71,16 @@ def gaussian_blur_kernel_2d(sigma, width, height):
         Return a kernel of dimensions width x height such that convolving it
         with an image results in a Gaussian-blurred image.
     """
-    # TODO-BLOCK-BEGIN
-    raise Exception("TODO in hybrid.py not implemented")
-    # TODO-BLOCK-END
+    kernel = np.zeros((height, width))
+    for r in range(height):
+        for c in range(width):
+            x = r - (width - 1) / 2
+            y = c - (height - 1) / 2
+            co = 1 / (2 * math.pi * (math.pow(sigma, 2)))
+            ex = math.exp(-1 * (math.pow(x, 2) + math.pow(y, 2)) / (2 * math.pow(sigma, 2)))
+            g = co * ex
+            kernel[r, c] = g
+    return kernel
 
 
 def low_pass(img, sigma, size):
