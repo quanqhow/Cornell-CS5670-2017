@@ -93,9 +93,10 @@ def low_pass(img, sigma, size):
         Return an image of the same dimensions as the input image (same width,
         height and the number of color channels)
     """
-    out_img = np.array(img.shape)
-    for layer_idx in range(img.shape[2]):
-        out_img[:, :, layer_idx] = convolve_2d(img, gaussian_blur_kernel_2d(sigma, size, size))
+    out_img = np.zeros(img.shape)
+    for layer_idx in xrange(img.shape[2]):
+        img_layer = img[:, :, layer_idx]
+        out_img[:, :, layer_idx] = convolve_2d(img_layer, gaussian_blur_kernel_2d(sigma, size, size))
     return out_img
 
 
