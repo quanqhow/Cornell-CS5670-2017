@@ -93,9 +93,10 @@ def low_pass(img, sigma, size):
         Return an image of the same dimensions as the input image (same width,
         height and the number of color channels)
     """
-    # TODO-BLOCK-BEGIN
-    raise Exception("TODO in hybrid.py not implemented")
-    # TODO-BLOCK-END
+    out_img = np.array(img.shape)
+    for layer_idx in range(img.shape[2]):
+        out_img[:, :, layer_idx] = convolve_2d(img, gaussian_blur_kernel_2d(sigma, size, size))
+    return out_img
 
 
 def high_pass(img, sigma, size):
@@ -108,13 +109,10 @@ def high_pass(img, sigma, size):
         Return an image of the same dimensions as the input image (same width,
         height and the number of color channels)
     """
-    # TODO-BLOCK-BEGIN
-    raise Exception("TODO in hybrid.py not implemented")
-    # TODO-BLOCK-END
+    return img - low_pass(img, sigma, size)
 
 
-def create_hybrid_image(img1, img2, sigma1, size1, high_low1, sigma2, size2,
-        high_low2, mixin_ratio):
+def create_hybrid_image(img1, img2, sigma1, size1, high_low1, sigma2, size2,high_low2, mixin_ratio):
     """
     This function adds two images to create a hybrid image, based on
     parameters specified by the user.
