@@ -16,8 +16,7 @@ def inbounds(shape, indices):
     return True
 
 
-## Keypoint detectors ##########################################################
-
+# Keypoint detectors ##########################################################
 class KeypointDetector(object):
     def detectKeypoints(self, image):
         '''
