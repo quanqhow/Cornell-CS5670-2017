@@ -46,7 +46,7 @@ def try_this(todo, run, truth, compare, *args, **kargs):
 
     @return (int): The amount of things that failed
     '''
-    print 'Starting test for TODO {}'.format(todo)
+    print('Starting test for TODO {}'.format(todo))
     failed = 0
     try:
         output = run(*args)
@@ -62,7 +62,7 @@ def try_this(todo, run, truth, compare, *args, **kargs):
     else:
         if not compare(output, truth, **kargs):
             print("TODO {} doesn't pass test".format(todo))
-            failed+=1
+            failed += 1
     return failed
 
 HKD = features.HarrisKeypointDetector()
@@ -73,14 +73,14 @@ SSDFM = features.SSDFeatureMatcher()
 image = np.array(Image.open('resources/triangle1.jpg'))
 grayImage = cv2.cvtColor(image.astype(np.float32)/255.0, cv2.COLOR_BGR2GRAY)
 def compute_and_save():
-    (a,b) = HKD.computeHarrisValues(grayImage) # Todo1
-    c = HKD.computeLocalMaxima(a) # Todo2
-    d = HKD.detectKeypoints(image) # Todo3
-    e = SFD.describeFeatures(image, d) # Todo 4
-    f = MFD.describeFeatures(image, d) # Todo 5,6
+    (a,b) = HKD.compute_harris_values(grayImage) # Todo1
+    c = HKD.compute_local_maxima(a) # Todo2
+    d = HKD.detect_keypoints(image) # Todo3
+    e = SFD.describe_features(image, d) # Todo 4
+    f = MFD.describe_features(image, d) # Todo 5,6
     # No test for Todo 7 or 8
     d_proc = pickle_cv2(d)
-    np.savez('resources/arrays',a=a,b=b,c=c,d_proc=d_proc,e=e,f=f)
+    np.savez('resources/arrays', a=a, b=b, c=c, d_proc=d_proc, e=e, f=f)
 # Uncomment next line to overwrite test data (not recommended)
 #compute_and_save()
 
@@ -104,25 +104,25 @@ This is not the script used by the autograder.
 loaded = np.load('resources/arrays.npz')
 d = unpickle_cv2(loaded['d_proc'])
 
-try_this(1, HKD.computeHarrisValues, [loaded['a'],loaded['b']], compare_array, grayImage)
+try_this(1, HKD.compute_harris_values, [loaded['a'], loaded['b']], compare_array, grayImage)
 
 # patch HKD so future tests won't fail because the last test failed
 class HKD2(features.HarrisKeypointDetector):
-  def computeHarrisValues(self,image):
+  def compute_harris_values(self, image):
     return loaded['a'],loaded['b']
 HKD=HKD2()
 
-try_this(2, HKD.computeLocalMaxima, loaded['c'], compare_array, loaded['a'])
+try_this(2, HKD.compute_local_maxima, loaded['c'], compare_array, loaded['a'])
 
 # patch HKD so future tests won't fail because the last test failed
 class HKD3(HKD2):
-  def computeLocalMaxima(self,image):
+  def compute_local_maxima(self, image):
     return loaded['c']
 HKD=HKD3()
 
-try_this(3, HKD.detectKeypoints, d, compare_cv2_points, image)
+try_this(3, HKD.detect_keypoints, d, compare_cv2_points, image)
 
-try_this(4, SFD.describeFeatures, loaded['e'], compare_array, image, d)
+try_this(4, SFD.describe_features, loaded['e'], compare_array, image, d)
 
-try_this('5 and/or 6', MFD.describeFeatures, loaded['f'], compare_array, image, d)
+try_this('5 and/or 6', MFD.describe_features, loaded['f'], compare_array, image, d)
 

@@ -84,7 +84,7 @@ def addROCData(f1, f2, matches, h, threshold):
         id2 = m.trainIdx
 
         ptOld = np.array(f2[id2].pt)
-        ptNew = FeatureMatcher.applyHomography(f1[id1].pt, h)
+        ptNew = FeatureMatcher.apply_homography(f1[id1].pt, h)
 
         #Ignore unmatched points.  There might be a better way to
         #handle this.
@@ -221,9 +221,9 @@ def benchmark(origImage, trafoImages, homographies,
             matchThreshold -- The threshold used to determine if a match is valid
     '''
     assert len(trafoImages) == len(homographies)
-    okps = keypointDetector.detectKeypoints(origImage)
+    okps = keypointDetector.detect_keypoints(origImage)
     okps = [kp for kp in okps if kp.response >= kpThreshold]
-    odesc = featureDescriptor.describeFeatures(origImage, okps)
+    odesc = featureDescriptor.describe_features(origImage, okps)
 
     ds = []
     aucs = []
@@ -232,13 +232,13 @@ def benchmark(origImage, trafoImages, homographies,
     # go through each transformed image and perform feature matching
     for i, timg in enumerate(trafoImages):
         #print 'Matching image 1 with image {}'.format(i+2)
-        tkps = keypointDetector.detectKeypoints(timg)
+        tkps = keypointDetector.detect_keypoints(timg)
         tkps = [kp for kp in tkps if kp.response >= kpThreshold]
-        tdesc = featureDescriptor.describeFeatures(timg, tkps)
-        matches = featureMatcher.matchFeatures(odesc, tdesc)
+        tdesc = featureDescriptor.describe_features(timg, tkps)
+        matches = featureMatcher.match_features(odesc, tdesc)
         matches = sorted(matches, key = lambda x:x.distance)
 
-        d = features.FeatureMatcher.evaluateMatch(
+        d = features.FeatureMatcher.evaluate_match(
             okps, tkps, matches,
             homographies[i])
         ds.append(d)

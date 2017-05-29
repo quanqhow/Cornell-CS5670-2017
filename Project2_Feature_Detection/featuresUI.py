@@ -299,7 +299,7 @@ class KeypointDetectionFrame(BaseFrame):
         if self.image is not None:
             self.reloadImage()
             detector = self.getSelectedDetector()
-            self.keypoints = detector.detectKeypoints(self.image)
+            self.keypoints = detector.detect_keypoints(self.image)
             self.drawKeypoints()
         else:
             error('Load image before computing keypoints!')
@@ -453,13 +453,13 @@ class FeatureMatchingFrame(BaseFrame):
         for i in range(2):
             self.thresholdedKeypoints[i] = self.thresholdKeyPoints(
                 self.keypoints[i], self.getSelectedKpThreshold())
-            self.descriptors[i] = descriptor.describeFeatures(self.image[i],
-                self.thresholdedKeypoints[i])
+            self.descriptors[i] = descriptor.describe_features(self.image[i],
+                                                               self.thresholdedKeypoints[i])
 
         self.setStatus('Finding matches')
 
         matcher = self.getSelectedMatcher()
-        matches = matcher.matchFeatures(self.descriptors[0],self.descriptors[1])
+        matches = matcher.match_features(self.descriptors[0], self.descriptors[1])
         self.matches = sorted(matches, key = lambda x : x.distance)
 
     def concatImages(self, imgs):
@@ -495,7 +495,7 @@ class FeatureMatchingFrame(BaseFrame):
             detector = self.getSelectedDetector()
             for i in range(2):
                 if self.keypoints[i] is None:
-                    self.keypoints[i] = detector.detectKeypoints(self.image[i])
+                    self.keypoints[i] = detector.detect_keypoints(self.image[i])
 
             self.thresholdAndMatch()
 
